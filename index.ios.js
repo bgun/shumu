@@ -3,6 +3,7 @@
 import React  from 'react-native';
 import Speech from 'react-native-speech';
 import Swiper from 'react-native-swiper';
+import pinyin from 'pinyin';
 
 let {
   AppRegistry,
@@ -21,7 +22,7 @@ class shumu extends React.Component {
   }
 
   getNewNumber() {
-    return parseInt(Math.random() * 100);
+    return parseInt(Math.random() * 1000);
   }
 
   _onMomentumScrollEnd(e, state, context) {
@@ -32,25 +33,40 @@ class shumu extends React.Component {
     });
   }
 
+  pinyinNumbers(input) {
+    let p = ['líng','yī','èr','sān','sì','wǔ','lìu','qī','bā','jǐu'];
+    return input.split('').map(function(c,index) {
+      let n = parseInt(c);
+      let tens = '';
+      return p[n];
+    });
+  };
+
   render() {
     var t = this;
 
-    Speech.stop();
     setTimeout(function() {
       Speech.speak({
         text: ''+t.state.numCurrent,
         voice: 'zh',
-        rate: 0.4
+        rate: 0.3
       });
     }, 1200);
 
     let views = [
-      <View key='1' style={ styles.container }><Text style={ styles.text }>{ this.state.numCurrent }</Text></View>,
-      <View key='2' style={ styles.container }><Text style={ styles.text }>{ this.state.numNext }</Text></View>,
+      <View key='1' style={ styles.container }>
+        <Text style={ styles.text }>{ this.state.numCurrent }</Text>
+        <Text>{ this.pinyinNumbers(''+this.state.numCurrent )}</Text>
+      </View>,
+      <View key='2' style={ styles.container }>
+        <Text style={ styles.text }>{ this.state.numNext }</Text>
+        <Text>{ this.pinyinNumbers(''+this.state.numNext )}</Text>
+      </View>,
     ];
 
     return (
-      <Swiper onMomentumScrollEnd={ this._onMomentumScrollEnd.bind(this) }>
+      <Swiper onMomentumScrollEnd={ this._onMomentumScrollEnd.bind(this) }
+              showsPagination={ false }>
         { views }
       </Swiper>
     );
@@ -62,10 +78,11 @@ let styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#332255',
   },
   text: {
-    fontSize: 40
+    color: '#FFFFFF',
+    fontSize: 80
   }
 });
 
