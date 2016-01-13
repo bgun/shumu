@@ -12,11 +12,30 @@ let {
   View,
 } = React;
 
+class CardView extends React.Component {
+  translateNumbers(input) {
+    let inputStr = ''+input;
+    let p = '零一二三四五六七八九';
+    return inputStr.split('').map(function(c,index) {
+      let n = parseInt(c);
+      return p[n];
+    });
+  }
+  render() {
+    return (
+      <View style={ styles.card }>
+        <Text style={ styles.card_text }>{ this.props.num }</Text>
+        <Text style={{ color: '#FFFFFF', fontSize: 30 }}>{ this.translateNumbers(this.props.num ) }</Text>
+      </View>
+    );
+  }
+}
+
 class shumu extends React.Component {
   constructor() {
     super();
     this.state = {
-      numCurrent: 0,
+      numCurrent: '',
       numNext: this.getNewNumber()
     }
   }
@@ -33,15 +52,6 @@ class shumu extends React.Component {
     });
   }
 
-  pinyinNumbers(input) {
-    let p = ['líng','yī','èr','sān','sì','wǔ','lìu','qī','bā','jǐu'];
-    return input.split('').map(function(c,index) {
-      let n = parseInt(c);
-      let tens = '';
-      return p[n];
-    });
-  };
-
   render() {
     var t = this;
 
@@ -54,33 +64,34 @@ class shumu extends React.Component {
     }, 1200);
 
     let views = [
-      <View key='1' style={ styles.container }>
-        <Text style={ styles.text }>{ this.state.numCurrent }</Text>
-        <Text>{ this.pinyinNumbers(''+this.state.numCurrent )}</Text>
-      </View>,
-      <View key='2' style={ styles.container }>
-        <Text style={ styles.text }>{ this.state.numNext }</Text>
-        <Text>{ this.pinyinNumbers(''+this.state.numNext )}</Text>
-      </View>,
+      <CardView key='1' num={ this.state.numCurrent } />,
+      <CardView key='2' num={ this.state.numNext } />
     ];
 
     return (
-      <Swiper onMomentumScrollEnd={ this._onMomentumScrollEnd.bind(this) }
-              showsPagination={ false }>
-        { views }
-      </Swiper>
+      <View style={{ backgroundColor: '#FF0000', position: 'absolute' }}>
+        <View style={{ position: 'absolute' }}>
+          <Text>Test</Text>
+        </View>
+        <View style={{ position: 'absolute' }}>
+          <Swiper onMomentumScrollEnd={ this._onMomentumScrollEnd.bind(this) }
+                  showsPagination={ false }>
+            { views }
+          </Swiper>
+        </View>
+      </View>
     );
   }
 }
 
 let styles = StyleSheet.create({
-  container: {
+  card: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#332255',
   },
-  text: {
+  card_text: {
     color: '#FFFFFF',
     fontSize: 80
   }
