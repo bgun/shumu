@@ -69,6 +69,7 @@ function numToHanzi(originalNum) {
   }
 }
 
+/*
 tests.forEach(function(test) {
   if (numToHanzi(test[0]) === test[1]) {
     console.log('%d Passed. %s'.green, test[0], test[1]);
@@ -76,3 +77,6 @@ tests.forEach(function(test) {
     console.error('%d Failed. Got %s, expected %s'.red, test[0], numToHanzi(test[0]), test[1]);
   }
 });
+*/
+
+module.exports = numToHanzi;

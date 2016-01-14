@@ -5,6 +5,8 @@ import Speech from 'react-native-speech';
 import Swiper from 'react-native-swiper';
 import pinyin from 'pinyin';
 
+import numToHanzi from './numtohanzi.js';
+
 let {
   AppRegistry,
   StyleSheet,
@@ -13,19 +15,11 @@ let {
 } = React;
 
 class CardView extends React.Component {
-  translateNumbers(input) {
-    let inputStr = ''+input;
-    let p = '零一二三四五六七八九';
-    return inputStr.split('').map(function(c,index) {
-      let n = parseInt(c);
-      return p[n];
-    });
-  }
   render() {
     return (
       <View style={ styles.card }>
         <Text style={ styles.card_text }>{ this.props.num }</Text>
-        <Text style={{ color: '#FFFFFF', fontSize: 30 }}>{ this.translateNumbers(this.props.num ) }</Text>
+        <Text style={{ color: '#FFFFFF', fontSize: 30 }}>{ numToHanzi(this.props.num ) }</Text>
       </View>
     );
   }
