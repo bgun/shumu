@@ -10,5 +10,8 @@
     "react-native": "^0.17.0",
     "react-native-speech": "^0.1.2",
     "react-native-swiper": "^1.4.3"
+  },
+  "devDependencies": {
+    "colors": "^1.1.2"
   }
 }
