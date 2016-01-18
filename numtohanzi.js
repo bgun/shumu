@@ -1,6 +1,6 @@
 'use strict';
 
-let colors = require('colors');
+// let colors = require('colors');
 
 let tests = [
   //[123456, '十二万三千四百五十六'],
@@ -23,6 +23,7 @@ function wans(originalNum) {
   let haoma = '零一二三四五六七八九';
   let lingling = haoma[0]+haoma[0];
   let tens = '十百千万';
+  let liang = '两';
   let hanzi = '';
   let num = originalNum;
 
@@ -50,6 +51,10 @@ function wans(originalNum) {
   }
   while (hanzi[hanzi.length-1] === haoma[0]) {
     hanzi = hanzi.substr(0,hanzi.length-1);
+  }
+
+  if (originalNum > 199 && hanzi[0] === haoma[2]) {
+    hanzi = liang + hanzi.substr(1);
   }
 
   // exception for 11-19

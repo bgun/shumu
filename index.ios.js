@@ -5,6 +5,8 @@ import Speech from 'react-native-speech';
 import Swiper from 'react-native-swiper';
 import pinyin from 'pinyin';
 
+import Dimensions from 'Dimensions';
+
 import numToHanzi from './numtohanzi.js';
 
 let {
@@ -14,12 +16,19 @@ let {
   View,
 } = React;
 
+var ww = Dimensions.get('window').width;
+var wh = Dimensions.get('window').height;
+
+console.log(wh, ww);
+
 class CardView extends React.Component {
   render() {
     return (
-      <View style={ styles.card }>
-        <Text style={ styles.card_text }>{ this.props.num }</Text>
-        <Text style={{ color: '#FFFFFF', fontSize: 30 }}>{ numToHanzi(this.props.num ) }</Text>
+      <View style={[ styles.cardView, this.props.animStyle ]}>
+        <View style={ styles.cardViewInner }>
+          <Text style={ styles.cardViewText }>{ this.props.num }</Text>
+          <Text style={{ color: '#FFFFFF', fontSize: 30 }}>{ numToHanzi(this.props.num ) }</Text>
+        </View>
       </View>
     );
   }
@@ -38,14 +47,6 @@ class shumu extends React.Component {
     return parseInt(Math.random() * 1000);
   }
 
-  _onMomentumScrollEnd(e, state, context) {
-    // you can get `state` and `this`(ref to swiper's context) from params
-    this.setState({
-      numCurrent: this.state.numNext,
-      numNext: this.getNewNumber()
-    });
-  }
-
   render() {
     var t = this;
 
@@ -57,21 +58,37 @@ class shumu extends React.Component {
       });
     }, 1200);
 
-    let views = [
-      <CardView key='1' num={ this.state.numCurrent } />,
-      <CardView key='2' num={ this.state.numNext } />
-    ];
-
     return (
-      <View style={{ backgroundColor: '#FF0000', position: 'absolute' }}>
-        <View style={{ position: 'absolute' }}>
-          <Text>Test</Text>
-        </View>
-        <View style={{ position: 'absolute' }}>
-          <Swiper onMomentumScrollEnd={ this._onMomentumScrollEnd.bind(this) }
-                  showsPagination={ false }>
-            { views }
-          </Swiper>
+      <View>
+        <View
+          style={ styles.mainView }
+          onStartShouldSetResponder={ evt => true }
+          onResponderGrant={ evt => {
+            console.log("start", evt.nativeEvent.pageX);
+            this.setState({
+              touchStartX: evt.nativeEvent.pageX,
+              touchStartY: evt.nativeEvent.pageY
+            });
+          }}
+          onResponderMove={ evt => {
+            let dx = this.state.touchStartX - evt.nativeEvent.pageX;
+            let dy = this.state.touchStartY - evt.nativeEvent.pageY;
+            this.setState({
+              moveX: -((dx*dx)/100),
+              //moveY: -((dy*dy)/100)
+            });
+          }}
+          onResponderRelease={ evt => {
+            console.log("release", evt.nativeEvent.pageX);
+          }}
+          >
+          <View style={ styles.menuView }>
+            <Text>Menu</Text>
+          </View>
+          <View>
+            <CardView key='1' num={ this.state.numCurrent } animStyle={{ left: this.state.moveX, top: this.state.moveY }} />
+            <CardView key='2' num={ this.state.numNext    } animStyle={{ left: this.state.moveX, top: this.state.moveY }} />
+          </View>
         </View>
       </View>
     );
@@ -79,13 +96,28 @@ class shumu extends React.Component {
 }
 
 let styles = StyleSheet.create({
-  card: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+  mainView: {
     backgroundColor: '#332255',
+    flex: 1
   },
-  card_text: {
+  menuView: {
+    backgroundColor: '#FF0000',
+    height: wh,
+    position: 'absolute',
+    width: ww
+  },
+  cardView: {
+    backgroundColor: '#00FF00',
+    height: wh,
+    position: 'absolute',
+    width: ww
+  },
+  cardViewInner: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center'
+  },
+  cardViewText: {
     color: '#FFFFFF',
     fontSize: 80
   }
