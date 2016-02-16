@@ -52,7 +52,7 @@ export default class CardContainer extends React.Component {
   constructor(props) {
     super();
     this.state = {
-      dx: 0,
+      dx: new Animated.Value(0),
       topCard: this.getNewCardProps(),
       nextCard: this.getNewCardProps()
     };
@@ -85,9 +85,7 @@ export default class CardContainer extends React.Component {
         if (dx < 0) {
           dx = 0;
         }
-        this.setState({
-          dx: dx
-        })
+        this.state.dx.setValue(dx);
       }
     });
   }
@@ -110,33 +108,31 @@ export default class CardContainer extends React.Component {
   }
 
   onRelease() {
-    let animatedX = new Animated.Value(this.state.dx);
-    Animated.spring(animatedX, {
+    let toValue = 0;
+    if (this.state.dx._value > 60) {
+      toValue = ww+60;
+      setTimeout(() => {
+        this.state.dx.setValue(0);
+        this.setState({
+          topCard: this.state.nextCard,
+          nextCard: this.getNewCardProps()
+        });
+        this.readTopCard();
+      }, 500)
+    }
+    Animated.spring(this.state.dx, {
       duration: 500,
-      toValue: ww+60
+      toValue: toValue
     }).start();
-    this.setState({
-      dx: animatedX
-    });
-    setTimeout(() => {
-      this.setState({
-        dx: 0,
-        topCard: this.state.nextCard,
-        nextCard: this.getNewCardProps()
-      });
-      this.readTopCard();
-    }, 500)
   }
 
   render() {
     let cards = [
       <View key={this.state.nextCard.key} style={ styles.botCard }>
         <Card { ...this.state.nextCard } />
-        <Text>Back</Text>
       </View>,
       <Animated.View key={this.state.topCard.key} style={[styles.topCard, { left: this.state.dx }]}>
         <Card { ...this.state.topCard } />
-        <Text>Front</Text>
       </Animated.View>
     ];
 
