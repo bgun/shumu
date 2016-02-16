@@ -18,8 +18,6 @@ let tests = [
 
 
 function wans(originalNum) {
-  console.log("wanning",originalNum);
-
   let haoma = '零一二三四五六七八九';
   let lingling = haoma[0]+haoma[0];
   let tens = '十百千万';
