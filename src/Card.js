@@ -8,6 +8,7 @@ import Dimensions from 'Dimensions';
 import numToHanzi from './numtohanzi.js';
 
 let {
+  Image,
   StyleSheet,
   Text,
   View,
@@ -22,9 +23,8 @@ export default class Card extends React.Component {
   constructor(props) {
     super();
     this.state = {
-      cardStyle: props.style,
       num  : props.num,
-      hanzi: numToHanzi(props.num)
+      hanzi: numToHanzi(props.num),
     }
   }
 
@@ -34,7 +34,8 @@ export default class Card extends React.Component {
 
   render() {
     return (
-      <View style={[styles.card, this.state.cardStyle]}>
+      <View style={[styles.card, this.props.style]}>
+        <Image style={ styles.bgImage } source={ this.props.bgImage } />
         <View style={ styles.cardInner }>
           <Text style={ styles.cardText }>{ this.state.num }</Text>
           <Text style={{ color: '#FFFFFF', fontSize: 30 }}>{ this.state.hanzi }</Text>
@@ -46,12 +47,20 @@ export default class Card extends React.Component {
 }
 
 let styles = StyleSheet.create({
+  bgImage: {
+    opacity: 0.1,
+    position: 'absolute',
+      top: 0,
+      left: 0,
+    width: wh
+  },
   card: {
     height: wh,
     position: 'absolute',
     width: ww
   },
   cardInner: {
+    backgroundColor: 'transparent',
     alignItems: 'center',
     flex: 1,
     justifyContent: 'center'

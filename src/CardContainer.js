@@ -23,25 +23,29 @@ const CARD_TYPES = {
     getNum: () => _.random(1000,9999),
     cardStyle: {
       backgroundColor: 'blue'
-    }
+    },
+    backgroundImage: require('../img/tess1.png')
   },
   "bai": {
     getNum: () => _.random(100,999),
     cardStyle: {
       backgroundColor: 'purple'
-    }
+    },
+    backgroundImage: require('../img/tess2.png')
   },
   "shi": {
     getNum: () => _.random(10,99),
     cardStyle: {
       backgroundColor: 'orange'
-    }
+    },
+    backgroundImage: require('../img/tess3.png')
   },
   "currency": {
-    getNum: () => parseFloat(Math.random() * 100).toFixed(2),
+    getNum: () => parseFloat(Math.random() * 100).toFixed(2)+"元",
     cardStyle: {
       backgroundColor: 'green'
-    }
+    },
+    backgroundImage: require('../img/tess4.png')
   }
 };
 const CARD_KEYS = Object.keys(CARD_TYPES);
@@ -64,11 +68,11 @@ export default class CardContainer extends React.Component {
     let dt = (new Date()).getTime();
     let bigrand = parseInt(Math.random() * 10000);
     let key = "card:"+dt+":"+bigrand;
-    console.log(key);
     return {
       key: key,
       num: type.getNum(),
-      style: type.cardStyle
+      style: type.cardStyle,
+      bgImage: type.backgroundImage
     }
   }
 
