@@ -60,10 +60,13 @@ export default class CardContainer extends React.Component {
       topCard: this.getNewCardProps(),
       nextCard: this.getNewCardProps()
     };
+    this._lastCard = null;
   }
 
   getNewCardProps() {
-    let r = CARD_KEYS[parseInt(Math.random() * CARD_KEYS.length)];
+    // choose a card type randomly, but don't pick the same type twice in a row
+    let r = _.sample(_.filter(CARD_KEYS, c => (c !== this._lastCard)));
+    this._lastCard = r;
     let type = CARD_TYPES[r];
     let dt = (new Date()).getTime();
     let bigrand = parseInt(Math.random() * 10000);
