@@ -26,29 +26,28 @@ let SettingSwitch = (props) => (
 
 export default class Menu extends React.Component {
 
-  constructor() {
+  constructor(props) {
     super();
-    this.state = {
-      qian: true,
-      thou: true,
-      hund: true,
-      tens: true
-    };
+    this.state = props.settings;
   }
 
   handleSwitch(a, b) {
     let state = {};
     state[a] = b;
     this.setState(state);
+    this.props.updateSettings(this.state);
   }
 
   render() {
     return (
       <View style={ styles.menu }>
-        <SettingSwitch label="Show Currency"   value={ this.state.qian } handleSwitch={ this.handleSwitch.bind(this, "qian") } />
-        <SettingSwitch label="Show Thousands"  value={ this.state.thou } handleSwitch={ this.handleSwitch.bind(this, "thou") } />
-        <SettingSwitch label="Show Hundreds"   value={ this.state.hund } handleSwitch={ this.handleSwitch.bind(this, "hund") } />
-        <SettingSwitch label="Show Tens"       value={ this.state.tens } handleSwitch={ this.handleSwitch.bind(this, "tens") } />
+        <Text style={{ color: 'white', fontSize: 16, marginBottom: 30, textAlign: 'center' }}>Settings</Text>
+        <View>
+          <SettingSwitch label="Tens (10-99)"          value={ this.state.tens      } handleSwitch={ this.handleSwitch.bind(this, "tens") } />
+          <SettingSwitch label="Hundreds (100-999"     value={ this.state.hundreds  } handleSwitch={ this.handleSwitch.bind(this, "hundreds") } />
+          <SettingSwitch label="Thousands (1000-9999)" value={ this.state.thousands } handleSwitch={ this.handleSwitch.bind(this, "thousands") } />
+          <SettingSwitch label="Currency"              value={ this.state.currency  } handleSwitch={ this.handleSwitch.bind(this, "currency") } />
+        </View>
       </View>
     )
   }
@@ -57,10 +56,10 @@ export default class Menu extends React.Component {
 
 let styles = StyleSheet.create({
   menu: {
-    backgroundColor: '#777',
+    backgroundColor: '#138',
     height: window.height,
-    paddingVertical: 80,
-    paddingHorizontal: 20,
+    paddingVertical: 60,
+    paddingHorizontal: 30,
     position: 'absolute',
       top: 0,
       left: 0,
