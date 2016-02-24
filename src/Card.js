@@ -68,6 +68,9 @@ let styles = StyleSheet.create({
   card: {
     height: wh,
     position: 'absolute',
+    shadowColor: 'black',
+    shadowOpacity: 0.5,
+    shadowRadius: 40,
     width: ww
   },
   cardInner: {

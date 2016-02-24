@@ -71,7 +71,7 @@ export default class CardContainer extends React.Component {
 
   componentWillMount() {
     this._panResponder = PanResponder.create({
-      //onStartShouldSetPanResponder: (evt, gestureState) => true,
+      onStartShouldSetPanResponder: (evt, gestureState) => true,
       //onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
       onMoveShouldSetPanResponder: (evt, gestureState) => true,
       onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
@@ -158,9 +158,6 @@ let styles = StyleSheet.create({
     position: 'absolute',
       top: 0,
       left: 0,
-    shadowColor: 'black',
-    shadowOpacity: 0.5,
-    shadowRadius: 40,
     width: ww
   },
   botCard: {
