@@ -31,11 +31,15 @@ export default class Menu extends React.Component {
     this.state = props.settings;
   }
 
-  handleSwitch(a, b) {
-    let state = {};
-    state[a] = b;
-    this.setState(state);
-    this.props.updateSettings(this.state);
+  handleSwitch(key, bool) {
+    let state = Object.assign({}, this.state);
+    state[key] = bool;
+    let atLeastOneTrue = state.tens || state.hundreds || state.thousands || state.currency;
+    console.log(atLeastOneTrue, this.state);
+    if (atLeastOneTrue) {
+      this.setState(state);
+      this.props.updateSettings(this.state);
+    }
   }
 
   render() {
