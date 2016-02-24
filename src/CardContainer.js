@@ -23,17 +23,12 @@ export default class CardContainer extends React.Component {
 
   constructor(props) {
     super();
-    console.log("props",props);
     this.state = {
       dx: new Animated.Value(0),
       topCard: this.getNewCardProps(props.cardTypes),
       nextCard: this.getNewCardProps(props.cardTypes)
     };
     this._lastCard = null;
-  }
-
-  componentWillReceiveProps(nextProps) {
-    console.log("next", nextProps);
   }
 
   getNewCardProps(types) {
@@ -69,7 +64,7 @@ export default class CardContainer extends React.Component {
       onPanResponderTerminate: this.onRelease.bind(this),
       onPanResponderMove: (e, gestureState) => {
         let dx = gestureState.dx;
-        if (dx < 0) {
+        if (dx > 0) {
           dx = 0;
         }
         this.state.dx.setValue(dx);
@@ -96,8 +91,8 @@ export default class CardContainer extends React.Component {
 
   onRelease() {
     let toValue = 0;
-    if (this.state.dx._value > 60) {
-      toValue = ww+60;
+    if (Math.abs(this.state.dx._value) > 60) {
+      toValue = -ww-60;
       setTimeout(() => {
         this.state.dx.setValue(0);
         this.setState({

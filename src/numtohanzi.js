@@ -1,29 +1,13 @@
 'use strict';
 
-// let colors = require('colors');
+let haoma = '零一二三四五六七八九';
+let lingling = haoma[0]+haoma[0];
+let tens = '十百千万';
+let liang = '两';
 
-let tests = [
-  //[123456, '十二万三千四百五十六'],
-  //[120000, '十二万'],
-  [99999,  '九万九千九百九十九'],
-  [50012,  '五万零一十二'],
-  [11011,  '一万一千零一十一'],
-  [1050,   '一千零五十'],
-  [123,    '一百二十三'],
-  [456,    '四百五十六'],
-  [16,     '十六'],
-  [12,     '十二'],
-  [1,      '一']
-];
-
-
-function wans(originalNum) {
-  let haoma = '零一二三四五六七八九';
-  let lingling = haoma[0]+haoma[0];
-  let tens = '十百千万';
-  let liang = '两';
-  let hanzi = '';
+function translateInt(originalNum) {
   let num = originalNum;
+  let hanzi = '';
 
   for (var i = 4; i > 0; i--) {
     let big = Math.pow(10, i);
@@ -63,23 +47,25 @@ function wans(originalNum) {
   return hanzi;
 }
 
-function numToHanzi(originalNum) {
-  let num = originalNum;
-  if (num < 100000) {
-    return wans(num);
-  } else {
-    return wans(Math.floor(num / 10000)) + wans(num % 100000);
-  }
+function simpleMap(stringNum) {
+  return stringNum.split('').map(c => haoma[parseInt(c)]).join('');
 }
 
-/*
-tests.forEach(function(test) {
-  if (numToHanzi(test[0]) === test[1]) {
-    console.log('%d Passed. %s'.green, test[0], test[1]);
-  } else {
-    console.error('%d Failed. Got %s, expected %s'.red, test[0], numToHanzi(test[0]), test[1]);
+function numToHanzi(num) {
+  // check for a decimal point
+  if (!(num % 1 === 0)) {
+    let parts = (""+num).split('.');
+    return [
+      translateInt(parts[0]),
+      simpleMap(parts[1])
+    ].join('点');
   }
-});
-*/
+
+  if (num < 100000) {
+    return translateInt(num);
+  } else {
+    return translateInt(Math.floor(num / 10000)) + wans(num % 100000);
+  }
+}
 
 module.exports = numToHanzi;

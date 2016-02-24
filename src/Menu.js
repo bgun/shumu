@@ -19,7 +19,7 @@ let SettingSwitch = (props) => (
       onValueChange={ value => props.handleSwitch(value) }
       value={ props.value }
       />
-    <Text style={{ color: 'white', paddingTop: 7, paddingLeft: 12 }}>{ props.label }</Text>
+    <Text style={{ color: 'white', fontSize: 18, paddingTop: 5, paddingLeft: 12 }}>{ props.label }</Text>
   </View>
 );
 
@@ -41,7 +41,6 @@ export default class Menu extends React.Component {
   render() {
     return (
       <View style={ styles.menu }>
-        <Text style={{ color: 'white', fontSize: 16, marginBottom: 30, textAlign: 'center' }}>Settings</Text>
         <View>
           <SettingSwitch label="Tens (10-99)"          value={ this.state.tens      } handleSwitch={ this.handleSwitch.bind(this, "tens") } />
           <SettingSwitch label="Hundreds (100-999"     value={ this.state.hundreds  } handleSwitch={ this.handleSwitch.bind(this, "hundreds") } />
@@ -56,13 +55,19 @@ export default class Menu extends React.Component {
 
 let styles = StyleSheet.create({
   menu: {
-    backgroundColor: '#138',
+    backgroundColor: '#346',
     height: window.height,
-    paddingVertical: 60,
+    paddingVertical: 100,
     paddingHorizontal: 30,
     position: 'absolute',
       top: 0,
       left: 0,
     width: window.width
   },
+  menuTitle: {
+    color: 'white',
+    fontSize: 24,
+    marginVertical: 30,
+    textAlign: 'center'
+  }
 });

@@ -22,14 +22,11 @@ export default class Card extends React.Component {
 
   constructor(props) {
     super();
+    let suffix = props.suffix ? props.suffix : "";
     this.state = {
       num  : props.num,
-      hanzi: numToHanzi(props.num),
+      hanzi: numToHanzi(props.num)+suffix,
     }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    console.log("Active!", nextProps.num);
   }
 
   render() {
