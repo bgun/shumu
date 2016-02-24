@@ -4,12 +4,16 @@ import _          from 'lodash';
 import React      from 'react-native';
 import Dimensions from 'Dimensions';
 import Speech     from 'react-native-speech';
+import pinyin     from 'pinyin';
+
+import numToHanzi from './numtohanzi.js';
 
 let {
   Animated,
   PanResponder,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View
 } = React;
 
@@ -46,18 +50,23 @@ export default class CardContainer extends React.Component {
     let dt = (new Date()).getTime();
     let bigrand = parseInt(Math.random() * 10000);
     let key = "card:"+dt+":"+bigrand;
+    let num = type.getNum();
+    let hanzi = numToHanzi(num);
     return {
       key: key,
-      num: type.getNum(),
+      num: num,
+      suffix: type.suffix,
       style: type.cardStyle,
+      hanzi: hanzi,
+      pinyin: pinyin(hanzi),
       bgImage: type.backgroundImage
     }
   }
 
   componentWillMount() {
     this._panResponder = PanResponder.create({
-      onStartShouldSetPanResponder: (evt, gestureState) => true,
-      onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
+      //onStartShouldSetPanResponder: (evt, gestureState) => true,
+      //onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
       onMoveShouldSetPanResponder: (evt, gestureState) => true,
       onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
       onPanResponderRelease  : this.onRelease.bind(this),
@@ -79,7 +88,7 @@ export default class CardContainer extends React.Component {
   readTopCard() {
     setTimeout(() => {
       Speech.speak({
-        text: ''+this.state.topCard.num,
+        text: ''+this.state.topCard.hanzi,
         voice: 'zh',
         rate: 0.3
       })
@@ -106,6 +115,10 @@ export default class CardContainer extends React.Component {
       duration: 500,
       toValue: toValue
     }).start();
+  }
+
+  handlePress() {
+    console.log("press");
   }
 
   render() {

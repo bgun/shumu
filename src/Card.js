@@ -5,12 +5,12 @@ import pinyin from 'pinyin';
 
 import Dimensions from 'Dimensions';
 
-import numToHanzi from './numtohanzi.js';
 
 let {
   Image,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } = React;
 
@@ -20,13 +20,17 @@ var wh = Dimensions.get('window').height;
 
 export default class Card extends React.Component {
 
-  constructor(props) {
+  constructor() {
     super();
-    let suffix = props.suffix ? props.suffix : "";
     this.state = {
-      num  : props.num,
-      hanzi: numToHanzi(props.num)+suffix,
+      showPinyin: false
     }
+  }
+
+  handlePress() {
+    this.setState({
+      showPinyin: true
+    });
   }
 
   render() {
@@ -35,10 +39,13 @@ export default class Card extends React.Component {
         <View style={ styles.bgContainer }>
           <Image style={ styles.bgImage } source={ this.props.bgImage } />
         </View>
-        <View style={ styles.cardInner }>
-          <Text style={ styles.cardText }>{ this.state.num }</Text>
-          <Text style={{ color: '#FFFFFF', fontSize: 30 }}>{ this.state.hanzi }</Text>
-        </View>
+        <TouchableOpacity onPress={ this.handlePress.bind(this) } style={ styles.cardInner }>
+          <Text style={ styles.cardText   }>{ this.props.num }</Text>
+          <Text style={ styles.cardHanzi  }>{ this.props.hanzi }</Text>
+          { this.state.showPinyin ? (
+            <Text style={ styles.cardPinyin }>{ this.props.pinyin.join(' ') }</Text>
+          ) : null }
+        </TouchableOpacity>
       </View>
     );
   }
@@ -70,7 +77,16 @@ let styles = StyleSheet.create({
     justifyContent: 'center'
   },
   cardText: {
-    color: '#FFFFFF',
+    color: '#FFF',
     fontSize: 80
+  },
+  cardHanzi: {
+    color: '#FFF',
+    fontSize: 30
+  },
+  cardPinyin: {
+    color: '#FFF',
+    fontSize: 24,
+    marginTop: 16
   }
 });
