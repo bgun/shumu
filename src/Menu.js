@@ -55,7 +55,7 @@ export default class Menu extends React.Component {
 
 let styles = StyleSheet.create({
   menu: {
-    backgroundColor: '#346',
+    backgroundColor: '#338',
     height: window.height,
     paddingVertical: 100,
     paddingHorizontal: 30,

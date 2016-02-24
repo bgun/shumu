@@ -35,6 +35,12 @@ export default class CardContainer extends React.Component {
     this._lastCard = null;
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      nextCard: this.getNewCardProps(nextProps.cardTypes)
+    });
+  }
+
   getNewCardProps(types) {
     let cardKeys = Object.keys(types);
     let r;
