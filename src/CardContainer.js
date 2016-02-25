@@ -19,8 +19,7 @@ let {
 
 import Card from './Card';
 
-var ww = Dimensions.get('window').width;
-var wh = Dimensions.get('window').height;
+var window = Dimensions.get('window');
 
 
 export default class CardContainer extends React.Component {
@@ -107,7 +106,7 @@ export default class CardContainer extends React.Component {
   onRelease() {
     let toValue = 0;
     if (Math.abs(this.state.dx._value) > 60) {
-      toValue = -ww-60;
+      toValue = (-window.width)-60;
       setTimeout(() => {
         this.state.dx.setValue(0);
         this.setState({
@@ -121,10 +120,6 @@ export default class CardContainer extends React.Component {
       duration: 500,
       toValue: toValue
     }).start();
-  }
-
-  handlePress() {
-    console.log("press");
   }
 
   render() {
@@ -148,23 +143,23 @@ export default class CardContainer extends React.Component {
 
 let styles = StyleSheet.create({
   cardView: {
-    height: wh,
+    height: window.height,
     position: 'absolute',
       top: 0,
-    width: ww
+    width: window.width
   },
   topCard: {
-    height: wh,
+    height: window.height,
     position: 'absolute',
       top: 0,
       left: 0,
-    width: ww
+    width: window.width
   },
   botCard: {
-    height: wh,
+    height: window.height,
     position: 'absolute',
       top: 0,
       left: 0,
-    width: ww
+    width: window.width
   }
 });

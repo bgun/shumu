@@ -15,40 +15,10 @@ let {
 import CardContainer from './CardContainer';
 import Menu from './Menu';
 
+import CARD_TYPES from './cardTypes';
+
+
 let window = Dimensions.get('window');
-
-
-const CARD_TYPES = {
-  "thousands": {
-    getNum: () => _.random(1000,9999),
-    cardStyle: {
-      backgroundColor: 'blue'
-    },
-    backgroundImage: require("image!bg_pattern1")
-  },
-  "hundreds": {
-    getNum: () => _.random(100,999),
-    cardStyle: {
-      backgroundColor: 'purple'
-    },
-    backgroundImage: require("image!bg_pattern2")
-  },
-  "tens": {
-    getNum: () => _.random(10,99),
-    cardStyle: {
-      backgroundColor: 'orange'
-    },
-    backgroundImage: require("image!bg_pattern3")
-  },
-  "currency": {
-    getNum: () => parseFloat(Math.random() * 100).toFixed(2),
-    suffix: "元",
-    cardStyle: {
-      backgroundColor: 'green'
-    },
-    backgroundImage: require("image!bg_pattern4")
-  }
-};
 
 
 export default class shumu extends React.Component {
@@ -62,11 +32,12 @@ export default class shumu extends React.Component {
       overlayFade: new Animated.Value(0),
       settings: {
         currency: true,
-        thousands: false,
-        hundreds: false,
-        tens: false
+        thousands: true,
+        hundreds: true,
+        tens: true
       }
     };
+    console.log("Settings", this.state.settings);
   }
 
   toggleMenu() {
