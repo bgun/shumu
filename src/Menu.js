@@ -4,6 +4,7 @@ import CardContainer from './CardContainer';
 
 let {
   Dimensions,
+  Picker,
   StyleSheet,
   Switch,
   Text,
@@ -31,15 +32,22 @@ export default class Menu extends React.Component {
     this.state = props.settings;
   }
 
-  handleSwitch(key, bool) {
+  handleSwitch(key, value) {
     let state = Object.assign({}, this.state);
-    state[key] = bool;
+    state[key] = value;
     let atLeastOneTrue = state.tens || state.hundreds || state.thousands || state.currency;
     console.log(atLeastOneTrue, this.state);
     if (atLeastOneTrue) {
       this.setState(state);
       this.props.updateSettings(this.state);
     }
+  }
+
+  handlePickerChange(value) {
+    this.setState({
+      voiceDelay: value
+    });
+    this.props.updateSettings(this.state);
   }
 
   render() {
@@ -50,6 +58,15 @@ export default class Menu extends React.Component {
           <SettingSwitch label="Hundreds (100-999"     value={ this.state.hundreds  } handleSwitch={ this.handleSwitch.bind(this, "hundreds") } />
           <SettingSwitch label="Thousands (1000-9999)" value={ this.state.thousands } handleSwitch={ this.handleSwitch.bind(this, "thousands") } />
           <SettingSwitch label="Currency"              value={ this.state.currency  } handleSwitch={ this.handleSwitch.bind(this, "currency") } />
+        </View>
+        <View>
+          <Picker
+            selectedValue={ this.state.voiceDelay }
+            onValueChange={ this.handlePickerChange.bind(this) }>
+            <Picker.Item label="Master (1 second)" value={ 1000 } />
+            <Picker.Item label="Experienced (1.5 second)" value={ 1500 } />
+            <Picker.Item label="Training (3 second)" value={ 3000 } />
+          </Picker>
         </View>
       </View>
     )
