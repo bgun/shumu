@@ -1,7 +1,7 @@
 'use strict';
 
-import React from 'react-native';
+import { AppRegistry } from 'react-native';
 
 import shumu from './src/app';
 
-React.AppRegistry.registerComponent('shumu', () => shumu);
+AppRegistry.registerComponent('shumu', () => shumu);

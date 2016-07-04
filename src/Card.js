@@ -1,24 +1,22 @@
 'use strict';
 
-import React  from 'react-native';
+import Dimensions from 'Dimensions';
 import pinyin from 'pinyin';
 
-import Dimensions from 'Dimensions';
-
-
-let {
+import React, { Component } from 'react';
+import {
   Image,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-} = React;
+} from 'react-native';
 
 var ww = Dimensions.get('window').width;
 var wh = Dimensions.get('window').height;
 
 
-export default class Card extends React.Component {
+export default class Card extends Component {
 
   constructor() {
     super();

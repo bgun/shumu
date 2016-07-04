@@ -1,22 +1,21 @@
 'use strict';
 
 import _          from 'lodash';
-import React      from 'react-native';
 import Dimensions from 'Dimensions';
 import Speech     from 'react-native-speech';
 import pinyin     from 'pinyin';
 
-import numToHanzi from './numtohanzi.js';
-
-let {
+import React, { Component } from 'react';
+import {
   Animated,
   PanResponder,
   StyleSheet,
   Text,
   TouchableOpacity,
   View
-} = React;
+} from 'react-native';
 
+import numToHanzi from './numtohanzi.js';
 import Card from './Card';
 
 var window = Dimensions.get('window');

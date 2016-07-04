@@ -1,15 +1,16 @@
-import React from 'react-native';
+'use strict';
 
-import CardContainer from './CardContainer';
-
-let {
+import React, { Component } from 'react';
+import {
   Dimensions,
   Picker,
   StyleSheet,
   Switch,
   Text,
   View,
-} = React;
+} from 'react-native';
+
+import CardContainer from './CardContainer';
 
 let window = Dimensions.get('window');
 
@@ -25,7 +26,7 @@ let SettingSwitch = (props) => (
 );
 
 
-export default class Menu extends React.Component {
+export default class Menu extends Component {
 
   constructor(props) {
     super();

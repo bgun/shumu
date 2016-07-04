@@ -1,8 +1,7 @@
 'use strict';
 
-import React  from 'react-native';
-
-let {
+import React, { Component } from 'react';
+import {
   Animated,
   Dimensions,
   Image,
@@ -10,7 +9,7 @@ let {
   Text,
   TouchableOpacity,
   View,
-} = React;
+} from 'react-native';
 
 import CardContainer from './CardContainer';
 import Menu from './Menu';
@@ -21,7 +20,7 @@ import CARD_TYPES from './cardTypes';
 let window = Dimensions.get('window');
 
 
-export default class shumu extends React.Component {
+export default class shumu extends Component {
 
   constructor() {
     super();
