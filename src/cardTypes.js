@@ -1,6 +1,12 @@
 import _ from 'lodash';
 
 export default {
+  "start": {
+    text: "This is the first card.",
+    cardStyle: {
+      backgroundColor: 'black'
+    },
+  },
   "thousands": {
     settingText: "Thousands (1000-9999)",
     getNum: () => _.random(1000,9999),

@@ -59,8 +59,9 @@ export default class Menu extends React.Component {
           <SettingSwitch label="Thousands (1000-9999)" value={ this.state.thousands } handleSwitch={ this.handleSwitch.bind(this, "thousands") } />
           <SettingSwitch label="Currency"              value={ this.state.currency  } handleSwitch={ this.handleSwitch.bind(this, "currency") } />
         </View>
-        <View>
+        <View style={ styles.picker }>
           <Picker
+            style={{ borderWidth: 1 }}
             selectedValue={ this.state.voiceDelay }
             onValueChange={ this.handlePickerChange.bind(this) }>
             <Picker.Item label="Master (1 second)" value={ 1000 } />
@@ -90,5 +91,12 @@ let styles = StyleSheet.create({
     fontSize: 24,
     marginVertical: 30,
     textAlign: 'center'
+  },
+  picker: {
+    backgroundColor: '#A0AA',
+    position: 'absolute',
+      bottom: 60,
+      left: 0,
+    width: window.width
   }
 });
